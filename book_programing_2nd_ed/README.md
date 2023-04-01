@@ -5,4 +5,4 @@ This repo follows the book "Programing Principals and Practice Using C++ 2nd Edi
 
 ## References 
 
-[1] Bjarne Stroustrup, Programming : Principles and Practice Using C++. Upper Saddle River, Nj: Addison-Wesley, pp. 45, 2014.
+[1] Bjarne Stroustrup, Programming : Principles and Practice Using C++. Upper Saddle River, Nj: Addison-Wesley, 2014.
