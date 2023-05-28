@@ -12,12 +12,14 @@
 #include "../../Utils/headers/std_lib_facilities.h"
 
 int square(int x){
+    /*
+        This function returns the squared value of a given integer number
+    */
+
     int x_squared = 0;
 
     for (int i = 0; i <= x-1; ++i){
-        // cout << "Iter: " << i << endl; 
-        x_squared += x;
-        // cout << "Squared: " << x_squared << endl;          
+        x_squared += x;         
     }
 
     return x_squared;
@@ -28,30 +30,14 @@ int main(){
     cout << "This script provides the square of a given number, with out using the multiplication operator [*]" << endl;
     cout << "\nInput an integer number to calculate the square: " ;
     
-    int x {0};      // x will be out number to square... 
-    
+    int x {0};      // x will be our number to square... 
     cin >> x;
 
-    // cout << "The given value is: " << x << endl;     // Check if the variable is taking the input value
-
-    /* This is the part that goes into the function square (delcared above)...
-
-    int x_squared = 0;  // variable to store the squared value of x
-
-    for (int i = 0; i <= x-1; ++i){
-        cout << "Iter: " << i << endl; 
-        x_squared += x;
-        cout << "Squared: " << x_squared << endl;          
-    }
-
-    */
-
-    // cout << "Given number: " << x << "\t Given number squared: " << x_squared << "\n" << endl; 
-
+    // Use our function to square the given number
     int x_squared = square(x);
 
+    // print out the given number and its squared value
     cout << "\n\nGiven number: " << x << "\t Given number squared: " << x_squared << "\n" << endl; 
-
 
     return 0;
 
