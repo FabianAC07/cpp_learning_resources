@@ -11,6 +11,9 @@
         smaller of the numbers and 'the larger valuer is:' followed by the larger 
         value. 
 
+    3.  Argument the program so that it writes the line the numbers are equal 
+        value.
+
     " [1]
 
     REF: [1] Bjarne Stroustrup, Programming : Principles and Practice Using C++. Upper Saddle River, Nj: Addison-Wesley, pp. 126, 2014.
@@ -18,31 +21,43 @@
 
 #include "../../Utils/headers/std_lib_facilities.h"
 
-vector<int> check_larger_value(int value_1, int value_2)
+// Function declaration
+
+vector<int> check_values(int value_1, int value_2)
 {
     /*
-        This function compare two int input values, and returns the larger and smaller values
+        This function compare two int input values and returns a sorted vector, which can be one of the following:
+
+        1. if value_1 is greater than value_2, returns vector = {value_2, value_1}
+        2. if value_1 is samller than value_2, returns vector = {value_1, value_1}
+        3. if values are equal, returns returns vector = {value_1}; vector.size() = 1
     */
 
-   int smaller_value {0};
-   int larger_value {0};
-
-   if (value_1 > value_2)
+   if (value_1 > value_2)           // value_1 is greater than value_2
    {
-        larger_value = value_1;
-        smaller_value = value_2;
-   }
-   else 
-   {
-        larger_value = value_2;
-        smaller_value = value_1;
-   }
+        vector<int> values = {value_2, value_1};
 
-   vector<int> values = {smaller_value, larger_value};
+        return values;
+   }
+   else if (value_1 < value_2)      // value_1 is smaller than value_2
+   {
+        vector<int> values = {value_1, value_2};
+
+        return values;
+   }
+   else                             // values are equal
+   {
+        vector<int> values = {value_1};
+
+        return values;
+   }
    
-   return values;
+
+   
 
 }
+
+// Main function. Here is where the program starts
 
 int main()
 {
@@ -98,20 +113,26 @@ int main()
         // If the input was indeed converted into int types, print the values to the terminal
         if (valid_input)
         {
-
-            // Step 2: Check which input value is larger and which one is smaller
-
-            int larger_value {0};
-            int smaller_value {0};
-
-            vector<int> values = check_larger_value(value_1, value_2); 
-
             
-            cout << "\n---------------------------------------------------------------------------\n" << endl;
-            cout << "Iteration: " << counter << endl;
-            cout << "\t-R1: You have entered: " << value_1 << " and " << value_2 << endl;
-            cout << "\t-R2: The smaller value is: " << values[0] << ", and the lasrger values is: " << values[1] << endl; 
-            cout << "\n---------------------------------------------------------------------------\n" << endl;
+            // Check the input values and store them in a vector
+            vector<int> values = check_values(value_1, value_2); 
+
+            if (values.size() > 1)
+            {
+                cout << "\n---------------------------------------------------------------------------\n" << endl;
+                cout << "Iteration: " << counter << endl;
+                cout << "\t-R1: You have entered: " << value_1 << " and " << value_2 << endl;
+                cout << "\t-R2: The smaller value is: " << values[0] << ", and the lasrger values is: " << values[1] << endl; 
+                cout << "\n---------------------------------------------------------------------------\n" << endl;
+                
+            }
+            else 
+            {
+                cout << "\n---------------------------------------------------------------------------\n" << endl;
+                cout << "Iteration: " << counter << endl;
+                cout << "\t-R3: The numbers are equal value." << endl; 
+                cout << "\n---------------------------------------------------------------------------\n" << endl;
+            }
             
             counter++;              // increment the counter      
         }
