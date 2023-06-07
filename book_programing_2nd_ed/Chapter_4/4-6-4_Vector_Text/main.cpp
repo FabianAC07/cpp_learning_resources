@@ -9,7 +9,7 @@
     
             string dislike = "Broccoli" 
     
-    When that works, ass a few more." [1]
+    When that works, add a few more." [1]
 
     REF: [1] Bjarne Stroustrup, Programming : Principles and Practice Using C++. Upper Saddle River, Nj: Addison-Wesley, pp. 116, 2014.
 */
