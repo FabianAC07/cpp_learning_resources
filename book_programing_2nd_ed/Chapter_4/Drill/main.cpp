@@ -16,9 +16,14 @@
 
     4.  Change the program so that it uses doubles instead of ints.
 
+    5.  Change the program so that it writes out the numbers are almost equal 
+        after writing out which number is the larger and the samller if the two numbers 
+        differ by less than 1.0/100
+
     " [1]
 
-    REF: [1] Bjarne Stroustrup, Programming : Principles and Practice Using C++. Upper Saddle River, Nj: Addison-Wesley, pp. 126, 2014.
+    REF: [1]    Bjarne Stroustrup, Programming : Principles and Practice Using C++. Upper 
+                Saddle River, Nj: Addison-Wesley, pp. 126, 2014.
 */
 
 #include "../../Utils/headers/std_lib_facilities.h"
@@ -28,7 +33,8 @@
 vector<double> check_values(double value_1, double value_2)
 {
     /*
-        This function compare two double input values and returns a sorted vector, which can be one of the following:
+        This function compare two double input values and returns a sorted vector, which 
+        can be one of the following:
 
         1. if value_1 is greater than value_2, returns vector = {value_2, value_1}
         2. if value_1 is samller than value_2, returns vector = {value_1, value_1}
@@ -37,23 +43,49 @@ vector<double> check_values(double value_1, double value_2)
 
    if (value_1 > value_2)           // value_1 is greater than value_2
    {
-        vector<double> values = {value_2, value_1};
+        double diff = value_1 - value_2;
 
-        return values;
+        if (diff <= 1.0/100)
+        {
+            // case 3 : Print the numbers are almost equal
+            vector<double> values = {3, value_2, value_1};      
+            return values;
+        }
+        else
+        {
+            // case 1 : Only print which value is grater than the other
+            vector<double> values = {1, value_2, value_1};      
+            return values;
+        }
+        
    }
    else if (value_1 < value_2)      // value_1 is smaller than value_2
    {
-        vector<double> values = {value_1, value_2};
+        double diff = value_2 - value_1;
 
-        return values;
+        if (diff <= 1.0/100)
+        {
+            // case 3 : Print the numbers are almost equal
+            vector<double> values = {3, value_1, value_2};      
+            return values;
+        }
+        else
+        {
+            // case 1 : Only print which value is grater than the other
+            vector<double> values = {1, value_1, value_2};      
+            return values;
+        }
+        
    }
-   else                             // values are equal
+    else    // values are equal
    { 
-        vector<double> values = {value_1};
+        // case 2 : Both numbers are equal
+        vector<double> values = {2, value_1};                   
 
         return values;
    }
 }
+
 
 // Main function. Here is where the program starts
 
@@ -63,8 +95,8 @@ int main()
     string input_1 = " ";               // input 1
     string input_2 = " ";               // input 2
 
-    double value_1 {0.0};                    // value 1
-    double value_2 {0.0};                    // value 2
+    double value_1 {0.0};               // value 1
+    double value_2 {0.0};               // value 2
 
     bool while_condition = true;        // condition to run the while loop
     bool valid_input = true;            // condition to verify input
@@ -72,7 +104,8 @@ int main()
     int counter {1};                    // iterations counter 
 
     // Step 1
-    cout << "This program request the user to enter two integer numbers \non each iteration and then print them to the terminal.\n" << endl;
+    cout << "This program request the user to enter two integer numbers \non each iteration and "
+            "then print them to the terminal.\n" << endl;
 
     // Request the first input value to the user and check if it's '|'. If so, exit... 
     cout << "Enter the first value (or '|' to exit): "; 
@@ -105,39 +138,57 @@ int main()
         // If the inputs can't be converted into double type, then raise an excpetion... 
         catch (const std::exception& e)
         {
-            valid_input = false; // This will only work if the input was not converted into double types
+            // This will only work if the input was not converted into double types
+            valid_input = false; 
         }
 
-        // If the input was indeed converted into double types, print the values to the terminal
+        // If the input was indeed converted into double types, print the values 
         if (valid_input)
         {
             
             // Check the input values and store them in a vector
             vector<double> values = check_values(value_1, value_2); 
 
-            if (values.size() > 1)
+            int case_value = static_cast<int>(values[0]);
+
+            cout << fixed << setprecision(4);
+
+            switch (case_value)
             {
-                cout << "\n---------------------------------------------------------------------------\n" << endl;
+            case 1:     // Only print which value is grater than the other
+                cout << "\n-------------------------------------------------------------\n" << endl;
                 cout << "Iteration: " << counter << endl;
-                cout << fixed << setprecision(4);
                 cout << "\t-R1: You have entered: " << value_1 << " and " << value_2 << endl;
-                cout << "\t-R2: The smaller value is: " << values[0]  << ", and the lasrger values is: " << values[1] << endl; 
-                cout << "\n---------------------------------------------------------------------------\n" << endl;
-                
-            }
-            else 
-            {
-                cout << "\n---------------------------------------------------------------------------\n" << endl;
+                cout << "\t-R2: The smaller value is: " << values[1]  << ", and the larger values "
+                        "is: " << values[2] << endl; 
+                cout << "\n-------------------------------------------------------------\n" << endl;
+                break;
+            
+            case 2:     // Both numbers are equal
+                cout << "\n-------------------------------------------------------------\n" << endl;
                 cout << "Iteration: " << counter << endl;
                 cout << "\t-R3: The numbers are equal value." << endl; 
-                cout << "\n---------------------------------------------------------------------------\n" << endl;
+                cout << "\n-------------------------------------------------------------\n" << endl;
+                break;
+            
+            case 3:     // Print the numbers are almost equal
+                cout << "\n-------------------------------------------------------------\n" << endl;
+                cout << "Iteration: " << counter << endl;
+                cout << "\t-R1: You have entered: " << value_1 << " and " << value_2 << endl;
+                cout << "\t-R5: The smaller value is: " << values[1]  << ", and the larger values " 
+                        "is: " << values[2] << " - The values are almost equal!" << endl; 
+                cout << "\n-------------------------------------------------------------\n" << endl;
+
+            default:
+                break;
             }
             
             counter++;              // increment the counter      
         }
         else // Print the invalid input message
         {
-            cout << "\nInvalid input. Please try again. Enter numbers type double, e.g.: 9.9999999\n" << endl;
+            cout << "\nInvalid input. Please try again. Enter numbers type double, e.g.: "
+                    "9.9999999\n" << endl;
             valid_input = true;     // set the valid input to true 
         }
 
