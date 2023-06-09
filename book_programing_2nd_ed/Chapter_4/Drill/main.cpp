@@ -14,6 +14,8 @@
     3.  Argument the program so that it writes the line the numbers are equal 
         value.
 
+    4.  Change the program so that it uses doubles instead of ints.
+
     " [1]
 
     REF: [1] Bjarne Stroustrup, Programming : Principles and Practice Using C++. Upper Saddle River, Nj: Addison-Wesley, pp. 126, 2014.
@@ -23,10 +25,10 @@
 
 // Function declaration
 
-vector<int> check_values(int value_1, int value_2)
+vector<double> check_values(double value_1, double value_2)
 {
     /*
-        This function compare two int input values and returns a sorted vector, which can be one of the following:
+        This function compare two double input values and returns a sorted vector, which can be one of the following:
 
         1. if value_1 is greater than value_2, returns vector = {value_2, value_1}
         2. if value_1 is samller than value_2, returns vector = {value_1, value_1}
@@ -35,26 +37,22 @@ vector<int> check_values(int value_1, int value_2)
 
    if (value_1 > value_2)           // value_1 is greater than value_2
    {
-        vector<int> values = {value_2, value_1};
+        vector<double> values = {value_2, value_1};
 
         return values;
    }
    else if (value_1 < value_2)      // value_1 is smaller than value_2
    {
-        vector<int> values = {value_1, value_2};
+        vector<double> values = {value_1, value_2};
 
         return values;
    }
    else                             // values are equal
-   {
-        vector<int> values = {value_1};
+   { 
+        vector<double> values = {value_1};
 
         return values;
    }
-   
-
-   
-
 }
 
 // Main function. Here is where the program starts
@@ -65,8 +63,8 @@ int main()
     string input_1 = " ";               // input 1
     string input_2 = " ";               // input 2
 
-    int value_1 {0};                    // value 1
-    int value_2 {0};                    // value 2
+    double value_1 {0.0};                    // value 1
+    double value_2 {0.0};                    // value 2
 
     bool while_condition = true;        // condition to run the while loop
     bool valid_input = true;            // condition to verify input
@@ -98,31 +96,32 @@ int main()
     while (while_condition)
     {
 
-        // Try to convert the input string into int types
+        // Try to convert the input string into double types
         try
         {
-            value_1 = stoi(input_1);
-            value_2 = stoi(input_2);
+            value_1 = stod(input_1);
+            value_2 = stod(input_2);
         }
-        // If the inputs can't be converted into int type, then raise an excpetion... 
+        // If the inputs can't be converted into double type, then raise an excpetion... 
         catch (const std::exception& e)
         {
-            valid_input = false; // This will only work if the input was not converted into int types
+            valid_input = false; // This will only work if the input was not converted into double types
         }
 
-        // If the input was indeed converted into int types, print the values to the terminal
+        // If the input was indeed converted into double types, print the values to the terminal
         if (valid_input)
         {
             
             // Check the input values and store them in a vector
-            vector<int> values = check_values(value_1, value_2); 
+            vector<double> values = check_values(value_1, value_2); 
 
             if (values.size() > 1)
             {
                 cout << "\n---------------------------------------------------------------------------\n" << endl;
                 cout << "Iteration: " << counter << endl;
+                cout << fixed << setprecision(4);
                 cout << "\t-R1: You have entered: " << value_1 << " and " << value_2 << endl;
-                cout << "\t-R2: The smaller value is: " << values[0] << ", and the lasrger values is: " << values[1] << endl; 
+                cout << "\t-R2: The smaller value is: " << values[0]  << ", and the lasrger values is: " << values[1] << endl; 
                 cout << "\n---------------------------------------------------------------------------\n" << endl;
                 
             }
@@ -138,7 +137,7 @@ int main()
         }
         else // Print the invalid input message
         {
-            cout << "\nInvalid input. Please try again. Enter integer values.\n" << endl;
+            cout << "\nInvalid input. Please try again. Enter numbers type double, e.g.: 9.9999999\n" << endl;
             valid_input = true;     // set the valid input to true 
         }
 
