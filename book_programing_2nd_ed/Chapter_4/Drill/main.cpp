@@ -18,7 +18,14 @@
 
     5.  Change the program so that it writes out the numbers are almost equal 
         after writing out which number is the larger and the samller if the two numbers 
-        differ by less than 1.0/100
+        differ by less than 1.0/100.
+
+    6.  Now change the body of the loop so that it reads just one double 
+        each time around. Define two variables to keep track of which is the smallest 
+        and which is the largest value you have seen so far. Each time through 
+        the loop write out the value entered. If it's the smallest so far, write the
+        smallest so far after the number. If it is the largest so far, write the largest
+        so far after the number.  
 
     " [1]
 
@@ -30,62 +37,6 @@
 
 // Function declaration
 
-vector<double> check_values(double value_1, double value_2)
-{
-    /*
-        This function compare two double input values and returns a sorted vector, which 
-        can be one of the following:
-
-        1. if value_1 is greater than value_2, returns vector = {value_2, value_1}
-        2. if value_1 is samller than value_2, returns vector = {value_1, value_1}
-        3. if values are equal, returns returns vector = {value_1}; vector.size() = 1
-    */
-
-   if (value_1 > value_2)           // value_1 is greater than value_2
-   {
-        double diff = value_1 - value_2;
-
-        if (diff <= 1.0/100)
-        {
-            // case 3 : Print the numbers are almost equal
-            vector<double> values = {3, value_2, value_1};      
-            return values;
-        }
-        else
-        {
-            // case 1 : Only print which value is grater than the other
-            vector<double> values = {1, value_2, value_1};      
-            return values;
-        }
-        
-   }
-   else if (value_1 < value_2)      // value_1 is smaller than value_2
-   {
-        double diff = value_2 - value_1;
-
-        if (diff <= 1.0/100)
-        {
-            // case 3 : Print the numbers are almost equal
-            vector<double> values = {3, value_1, value_2};      
-            return values;
-        }
-        else
-        {
-            // case 1 : Only print which value is grater than the other
-            vector<double> values = {1, value_1, value_2};      
-            return values;
-        }
-        
-   }
-    else    // values are equal
-   { 
-        // case 2 : Both numbers are equal
-        vector<double> values = {2, value_1};                   
-
-        return values;
-   }
-}
-
 
 // Main function. Here is where the program starts
 
@@ -93,21 +44,22 @@ int main()
 {
 
     string input_1 = " ";               // input 1
-    string input_2 = " ";               // input 2
 
-    double value_1 {0.0};               // value 1
-    double value_2 {0.0};               // value 2
+    double current_value {0.0};         // current value
+    double smallest_value {0.0};        // smallest value 
+    double largest_value {0.0};         // largest value
 
-    bool while_condition = true;        // condition to run the while loop
     bool valid_input = true;            // condition to verify input
 
     int counter {1};                    // iterations counter 
 
-    // Step 1
-    cout << "This program request the user to enter two integer numbers \non each iteration and "
-            "then print them to the terminal.\n" << endl;
+    cout << "This program request the user to enter a number and then print it back to "
+            "the terminal.\n" 
+            "This program also keeps track of the smallest and the greater number.\n" 
+            "If the user enters the smallest or the largest number so far, they will "
+            "be notified."<< endl;
 
-    // Request the first input value to the user and check if it's '|'. If so, exit... 
+    // Request the input number to the user and check if it's '|'. If so, exit... 
     cout << "Enter the first value (or '|' to exit): "; 
     cin >> input_1;
     if (input_1 == "|")
@@ -116,24 +68,14 @@ int main()
         return 0; 
     }
 
-     // Request the first input value to the user and check if it's '|'. If so, exit... 
-    cout << "Enter the second value (or '|' to exit): "; 
-    cin >> input_2;
-    if (input_2 == "|")
-    {
-        cout << "\n\t-User entered '|'. Exiting the program...\n" << endl;
-        return 0;  
-    }
 
-
-    while (while_condition)
+    while (true)
     {
 
         // Try to convert the input string into double types
         try
         {
-            value_1 = stod(input_1);
-            value_2 = stod(input_2);
+            current_value = stod(input_1);
         }
         // If the inputs can't be converted into double type, then raise an excpetion... 
         catch (const std::exception& e)
@@ -146,42 +88,45 @@ int main()
         if (valid_input)
         {
             
-            // Check the input values and store them in a vector
-            vector<double> values = check_values(value_1, value_2); 
-
-            int case_value = static_cast<int>(values[0]);
-
-            cout << fixed << setprecision(4);
-
-            switch (case_value)
+            if (counter == 1) 
             {
-            case 1:     // Only print which value is grater than the other
                 cout << "\n-------------------------------------------------------------\n" << endl;
                 cout << "Iteration: " << counter << endl;
-                cout << "\t-R1: You have entered: " << value_1 << " and " << value_2 << endl;
-                cout << "\t-R2: The smaller value is: " << values[1]  << ", and the larger values "
-                        "is: " << values[2] << endl; 
-                cout << "\n-------------------------------------------------------------\n" << endl;
-                break;
-            
-            case 2:     // Both numbers are equal
-                cout << "\n-------------------------------------------------------------\n" << endl;
-                cout << "Iteration: " << counter << endl;
-                cout << "\t-R3: The numbers are equal value." << endl; 
-                cout << "\n-------------------------------------------------------------\n" << endl;
-                break;
-            
-            case 3:     // Print the numbers are almost equal
-                cout << "\n-------------------------------------------------------------\n" << endl;
-                cout << "Iteration: " << counter << endl;
-                cout << "\t-R1: You have entered: " << value_1 << " and " << value_2 << endl;
-                cout << "\t-R5: The smaller value is: " << values[1]  << ", and the larger values " 
-                        "is: " << values[2] << " - The values are almost equal!" << endl; 
+                cout << "\t-R6: You have entered: " << current_value << endl;
                 cout << "\n-------------------------------------------------------------\n" << endl;
 
-            default:
-                break;
+                // Store the current value as the smallest and larger value 
+                smallest_value = current_value;
+                largest_value = current_value;
             }
+            else 
+            {
+                if (current_value < smallest_value)
+                {
+                    // replace smallest value with current value
+                    smallest_value = current_value;
+
+                    // print the value
+                    cout << "\n-------------------------------------------------------------\n" << endl;
+                    cout << "Iteration: " << counter << endl;
+                    cout << "\t-R6: You have entered: " << current_value << ", the samllest number so far..." << endl;
+                    cout << "\n-------------------------------------------------------------\n" << endl;
+                }
+                else if (current_value > largest_value)
+                {
+                    // replace largest value with current value
+                    largest_value = current_value;
+
+                    // print the value
+                    cout << "\n-------------------------------------------------------------\n" << endl;
+                    cout << "Iteration: " << counter << endl;
+                    cout << "\t-R6: You have entered: " << current_value << ", the largest number so far..." << endl;
+                    cout << "\n-------------------------------------------------------------\n" << endl;
+                }
+                
+                
+            }
+            
             
             counter++;              // increment the counter      
         }
@@ -198,15 +143,6 @@ int main()
         cout << "Enter the first value (or '|' to exit): "; 
         cin >> input_1;
         if (input_1 == "|")
-        {
-            cout << "\n\t-User entered '|'. Exiting the program...\n" << endl;
-            break;  
-        }
-
-        // Request the second input value to the user and check if it's '|'. If so, exit...
-        cout << "Enter the second value (or '|' to exit): "; 
-        cin >> input_2;
-        if (input_2 == "|")
         {
             cout << "\n\t-User entered '|'. Exiting the program...\n" << endl;
             break;  
